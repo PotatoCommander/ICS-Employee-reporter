@@ -43,7 +43,6 @@ namespace ICS_Employee_reporter
             this.Salary = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.comboBox = new System.Windows.Forms.ComboBox();
             this.FilterButton = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.employeeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
@@ -186,34 +185,25 @@ namespace ICS_Employee_reporter
             this.FilterButton.UseVisualStyleBackColor = true;
             this.FilterButton.Click += new System.EventHandler(this.FilterButton_Click);
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(12, 85);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(157, 22);
-            this.textBox1.TabIndex = 7;
-            // 
             // employeeBindingSource
             // 
             this.employeeBindingSource.DataSource = typeof(ICS_Employee_reporter.Models.Employee);
             // 
-            // Main
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1342, 705);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.FilterButton);
             this.Controls.Add(this.comboBox);
             this.Controls.Add(this.dataGrid);
             this.Controls.Add(this.panel1);
-            this.Name = "Main";
-            this.Text = "Form1";
+            this.Name = "MainForm";
+            this.Text = "ICS-Employee-Reporter";
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.employeeBindingSource)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -233,7 +223,6 @@ namespace ICS_Employee_reporter
         private System.Windows.Forms.DataGridViewTextBoxColumn Salary;
         private System.Windows.Forms.ComboBox comboBox;
         private System.Windows.Forms.Button FilterButton;
-        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

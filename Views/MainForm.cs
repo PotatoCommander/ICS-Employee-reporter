@@ -35,7 +35,9 @@ namespace ICS_Employee_reporter
         {
             var list = _repository.GetAll();
             dataGrid.DataSource = list;
-            comboBox.DataSource = list.Select(x => x.Position).Distinct().ToList();
+            var comboBoxList = list.Select(x => x.Position).Distinct().ToList();
+            comboBoxList.Insert(0, "-----");
+            comboBox.DataSource = comboBoxList;
         }
 
         private void AddButton_click(object sender, EventArgs e)
@@ -71,9 +73,17 @@ namespace ICS_Employee_reporter
 
         private void FilterButton_Click(object sender, EventArgs e)
         {
-            dataGrid.DataSource = _repository.GetAll()
-                .Where(x => x.Position == comboBox.SelectedItem.ToString())
-                .ToList();
+            if (comboBox.SelectedItem.ToString().Equals("-----"))
+            {
+                dataGrid.DataSource = _repository.GetAll();
+            }
+            else
+            {
+                dataGrid.DataSource = _repository.GetAll()
+                    .Where(x => x.Position == comboBox.SelectedItem.ToString())
+                    .ToList();
+            }
+            
             dataGrid.Update();
         }
     }
