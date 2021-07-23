@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ICS_Employee_reporter.Models
 {
-    class Employee
+    public class Employee
     {
         public string Id { get; set; }
         public string FirstName { get; set; }
@@ -15,5 +16,18 @@ namespace ICS_Employee_reporter.Models
         public string Position { get; set; }
         public DateTime DateOfBirth { get; set; }
         public decimal Salary { get; set; }
+
+        public Employee()
+        {
+        }
+        public Employee(DataRow dataRow)
+        {
+            Id = dataRow["Id"].ToString();
+            FirstName = dataRow["FirstName"].ToString();
+            LastName = dataRow["LastName"].ToString();
+            Position = dataRow["Position"].ToString();
+            DateOfBirth = Convert.ToDateTime(dataRow["DateOfBirth"]);
+            Salary = Convert.ToDecimal(dataRow["Salary"]);
+        }
     }
 }

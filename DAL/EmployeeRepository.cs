@@ -3,64 +3,110 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ICS_Employee_reporter.Models;
 
 namespace ICS_Employee_reporter.DAL
 {
-    class EmployeeRepository
+    public class EmployeeRepository : IRepository
     {
-        public DataTable DataTable { set; get; }
-        private string _connectionString;
-        private const string SELECT = "SELECT * FROM Employees";
+        private readonly string _connectionString;
 
         public EmployeeRepository(string connectionString)
         {
             _connectionString = connectionString;
-            using (var connection = new SqlConnection(connectionString))
+        }
+
+        public List<Employee> GetAll()
+        {
+            try
             {
-                connection.Open();
-                var adapter = new SqlDataAdapter(SELECT, connection);
-                DataTable = new DataTable();
-                
-                adapter.Fill(DataTable);
-                DataTable.PrimaryKey = new[] {DataTable.Columns["Id"]};
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    using (var cmd = new SqlCommand("SelectAllEmployees", connection)
+                        {CommandType = CommandType.StoredProcedure})
+                    {
+                        var dataAdapter = new SqlDataAdapter(cmd);
+                        var dataTable = new DataTable();
+
+                        connection.Open();
+                        dataAdapter.Fill(dataTable);
+                        connection.Close();
+
+                        return dataTable.AsEnumerable().Select(x => new Employee(x)).ToList();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
 
-        public DataTable DeleteById(int id)
-        { 
-            DataTable.Rows.Find(id).Delete();
-            return DataTable;
-        }
-
-        public DataTable AddItem(Employee employee)
-        {
-            var row = DataTable.NewRow();
-            row["Id"] = Guid.NewGuid();
-            row["FirstName"] = employee.FirstName;
-            row["LastName"] = employee.LastName;
-            row["Position"] = employee.Position;
-            row["DateOfBirth"] = employee.DateOfBirth.ToString("yyyy-MM-dd");
-            row["Salary"] = employee.Salary;
-            DataTable.Rows.Add(row);
-            return DataTable;
-        }
-
-        public DataTable SaveChanges()
+        public bool DeleteById(string id)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                connection.Open();
-                var adapter = new SqlDataAdapter(SELECT, connection);
-
-                var _ = new SqlCommandBuilder(adapter);
-                adapter.Update(DataTable);
+                using (var cmd = new SqlCommand("DeleteEmployee", connection)
+                    {CommandType = CommandType.StoredProcedure})
+                {
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    connection.Open();
+                    var affectedRows = cmd.ExecuteNonQuery();
+                    connection.Close();
+                    return affectedRows >= 1;
+                }
             }
-            
+        }
 
-            return DataTable;
+        public bool AddEmployee(Employee employee)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                using (var cmd = new SqlCommand("InsertEmployee", connection)
+                    {CommandType = CommandType.StoredProcedure})
+                {
+                    cmd.Parameters.AddWithValue("@FirstName", employee.FirstName);
+                    cmd.Parameters.AddWithValue("@LastName", employee.LastName);
+                    cmd.Parameters.AddWithValue("@Position", employee.Position);
+                    cmd.Parameters.AddWithValue("@DateOfBirth", employee.DateOfBirth.ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@Salary", employee.Salary);
+
+                    connection.Open();
+                    var affectedRows = cmd.ExecuteNonQuery();
+                    connection.Close();
+                    return affectedRows >= 1;
+                }
+            }
+        }
+
+        public bool Query(string query)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    using (var cmd = new SqlCommand(query, connection))
+                    {
+                        connection.Open();
+                        cmd.CommandType = CommandType.Text;
+                        cmd.ExecuteNonQuery();
+                        connection.Close();
+                    }
+                }
+
+                return true;
+            }
+            finally
+            {
+               
+            }
+
+            return false;
+        }
+
+        private Employee DataRowToEmployee(DataRow data)
+        {
+            return new Employee(data);
         }
     }
 }
