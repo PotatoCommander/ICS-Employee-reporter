@@ -39,6 +39,7 @@ namespace ICS_Employee_reporter
             this.reportViewer.ServerReport.BearerToken = null;
             this.reportViewer.Size = new System.Drawing.Size(795, 488);
             this.reportViewer.TabIndex = 0;
+            this.reportViewer.ReportRefresh += new System.ComponentModel.CancelEventHandler(this.reportViewer_ReportRefresh);
             // 
             // ReportForm
             // 

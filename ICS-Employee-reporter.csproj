@@ -132,6 +132,7 @@
       <DependentUpon>DataSet2.xsd</DependentUpon>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\AddForm.datasource" />
     <None Include="Properties\DataSources\ICS_Employee_reporter.Models.Employee.datasource" />
     <None Include="Properties\DataSources\ICS_Employee_reporter.Models.ReportRecord.datasource" />
     <None Include="Properties\Settings.settings">
