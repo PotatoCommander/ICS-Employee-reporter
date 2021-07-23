@@ -10,25 +10,26 @@ namespace ICS_Employee_reporter
 {
     public partial class MainForm : Form
     {
-        private readonly string _con =
-            "Data Source=POTATOSLENOVO\\SQLEXPRESS;Initial Catalog=Employees-DB;Integrated Security=True";
-
         private readonly EmployeeRepository _repository;
         private ICollection<Employee> _employees;
 
         public MainForm()
         {
             InitializeComponent();
-            _repository = new EmployeeRepository(_con);
+            _repository = new EmployeeRepository(System.Configuration.ConfigurationManager.
+                ConnectionStrings["defaultConnection"].ConnectionString);
+            UpdateData();
+            dataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGrid.MultiSelect = false;
+        }
+
+        private void InitDB()
+        {
             _repository.Query(Procedures.InsertProcedureCreation);
             _repository.Query(Procedures.DeleteProcedureCreation);
             _repository.Query(Procedures.SelectAllProcedureCreation);
             _repository.Query(Procedures.AverageSalaryProcedureCreation);
             _repository.Query(Procedures.CreateEmployeeTable);
-            UpdateData();
-
-            dataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGrid.MultiSelect = false;
         }
 
         public void UpdateData()
