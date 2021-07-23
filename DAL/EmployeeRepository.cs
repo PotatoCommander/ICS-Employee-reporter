@@ -4,7 +4,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using ICS_Employee_reporter.Models;
-using Microsoft.Reporting.WinForms;
 
 namespace ICS_Employee_reporter.DAL
 {
@@ -97,12 +96,10 @@ namespace ICS_Employee_reporter.DAL
 
                 return true;
             }
-            finally
+            catch(Exception)
             {
-               
+                return false;
             }
-
-            return false;
         }
 
         public DataTable Report()

@@ -20,6 +20,7 @@ namespace ICS_Employee_reporter.Models
         public Employee()
         {
         }
+        
         public Employee(DataRow dataRow)
         {
             Id = dataRow["Id"].ToString();

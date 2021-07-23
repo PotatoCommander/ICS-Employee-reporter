@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using ICS_Employee_reporter.DAL;
-using ICS_Employee_reporter.Models;
 using ICS_Employee_reporter.SQL_Procedures;
 
 namespace ICS_Employee_reporter
 {
     public partial class MainForm : Form
     {
-        private ICollection<Employee> _employees;
         private readonly EmployeeRepository _repository;
 
         private readonly string _con =
@@ -20,10 +17,13 @@ namespace ICS_Employee_reporter
         {
             InitializeComponent();
             _repository = new EmployeeRepository(_con);
+            
             _repository.Query(Procedures.InsertProcedureCreation);
             _repository.Query(Procedures.DeleteProcedureCreation);
             _repository.Query(Procedures.SelectAllProcedureCreation);
             _repository.Query(Procedures.AverageSalaryProcedureCreation);
+            _repository.Query(Procedures.CreateEmployeeTable);
+            UpdateData();
 
             dataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGrid.MultiSelect = false;
@@ -69,7 +69,10 @@ namespace ICS_Employee_reporter
 
         private void FilterButton_Click(object sender, EventArgs e)
         {
-            dataGrid.DataSource = _repository.GetAll().Where(x => x.Position == textBox1.Text).ToList();
+            dataGrid.DataSource = _repository
+                .GetAll()
+                .Where(x => x.Position == comboBox.SelectedItem.ToString())
+                .ToList();
             dataGrid.Update();
         }
     }

@@ -30,7 +30,9 @@ namespace ICS_Employee_reporter
 
         private void ReportForm_Load(object sender, EventArgs e)
         {
-            this.reportViewer.RefreshReport();
+            reportViewer.RefreshReport();
         }
+        //TODO: уродливые маскед техтбоксы
+        
     }
 }

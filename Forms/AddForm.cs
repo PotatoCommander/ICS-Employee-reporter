@@ -38,7 +38,7 @@ namespace ICS_Employee_reporter
             if (isSuccess)
             {
                 _parentForm.UpdateData();
-                this.Close();
+                Close();
                 return;
             }
 
