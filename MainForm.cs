@@ -23,7 +23,7 @@ namespace ICS_Employee_reporter
             _repository.Query(Procedures.InsertProcedureCreation);
             _repository.Query(Procedures.DeleteProcedureCreation);
             _repository.Query(Procedures.SelectAllProcedureCreation);
-
+            _repository.Query(Procedures.AverageSalaryProcedureCreation);
 
             dataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGrid.MultiSelect = false;
@@ -63,6 +63,8 @@ namespace ICS_Employee_reporter
 
         private void ReportButton_click(object sender, EventArgs e)
         {
+            var reportForm = new ReportForm(_repository);
+            reportForm.Show();
         }
 
         private void FilterButton_Click(object sender, EventArgs e)

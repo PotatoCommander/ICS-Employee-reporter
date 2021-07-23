@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using ICS_Employee_reporter.Models;
+using Microsoft.Reporting.WinForms;
 
 namespace ICS_Employee_reporter.DAL
 {
@@ -104,9 +105,19 @@ namespace ICS_Employee_reporter.DAL
             return false;
         }
 
-        private Employee DataRowToEmployee(DataRow data)
+        public DataTable Report()
         {
-            return new Employee(data);
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                using (var cmd = new SqlCommand("AverageSalary", connection) 
+                    {CommandType = CommandType.StoredProcedure})
+                {
+                    var adapter = new SqlDataAdapter(cmd);
+                    var dataTable = new DataTable();
+                    adapter.Fill(dataTable);
+                    return dataTable;
+                }
+            }
         }
     }
 }
