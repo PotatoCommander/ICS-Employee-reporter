@@ -24,6 +24,8 @@ namespace ICS_Employee_reporter
             _repository.Query(Procedures.DeleteProcedureCreation);
             _repository.Query(Procedures.SelectAllProcedureCreation);
             _repository.Query(Procedures.AverageSalaryProcedureCreation);
+            _repository.Query(Procedures.CreateEmployeeTable);
+            UpdateData();
 
             dataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGrid.MultiSelect = false;
@@ -69,7 +71,9 @@ namespace ICS_Employee_reporter
 
         private void FilterButton_Click(object sender, EventArgs e)
         {
-            dataGrid.DataSource = _repository.GetAll().Where(x => x.Position == textBox1.Text).ToList();
+            dataGrid.DataSource = _repository.GetAll()
+                .Where(x => x.Position == comboBox.SelectedItem.ToString())
+                .ToList();
             dataGrid.Update();
         }
     }
