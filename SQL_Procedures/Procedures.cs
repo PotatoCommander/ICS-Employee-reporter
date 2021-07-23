@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ICS_Employee_reporter.SQL_Procedures
+﻿namespace ICS_Employee_reporter.SQL_Procedures
 {
     public static class Procedures
     {
@@ -23,5 +17,4 @@ namespace ICS_Employee_reporter.SQL_Procedures
         public const string CreateEmployeeTable =
             "if object_id('Employees','U') is null\r\nBEGIN\r\nCREATE TABLE [Employees](\r\n\t[Id] [uniqueidentifier] NOT NULL DEFAULT (newsequentialid()),\r\n\t[FirstName] [nvarchar](50) NULL,\r\n\t[LastName] [nvarchar](50) NULL,\r\n\t[Position] [nvarchar](50) NULL,\r\n\t[DateOfBirth] [date] NULL,\r\n\t[Salary] [decimal](18, 2) NULL,\r\n CONSTRAINT [PK_Employees_1] PRIMARY KEY CLUSTERED \r\n(\r\n\t[Id] ASC\r\n)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]\r\n) ON [PRIMARY]\r\nEND\r\nGO";
     }
-
 }

@@ -10,11 +10,11 @@ namespace ICS_Employee_reporter
 {
     public partial class MainForm : Form
     {
-        private ICollection<Employee> _employees;
-        private readonly EmployeeRepository _repository;
-
         private readonly string _con =
             "Data Source=POTATOSLENOVO\\SQLEXPRESS;Initial Catalog=Employees-DB;Integrated Security=True";
+
+        private readonly EmployeeRepository _repository;
+        private ICollection<Employee> _employees;
 
         public MainForm()
         {

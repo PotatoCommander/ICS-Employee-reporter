@@ -4,7 +4,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using ICS_Employee_reporter.Models;
-using Microsoft.Reporting.WinForms;
 
 namespace ICS_Employee_reporter.DAL
 {
@@ -97,19 +96,17 @@ namespace ICS_Employee_reporter.DAL
 
                 return true;
             }
-            finally
+            catch
             {
-               
+                return false;
             }
-
-            return false;
         }
 
         public DataTable Report()
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                using (var cmd = new SqlCommand("AverageSalary", connection) 
+                using (var cmd = new SqlCommand("AverageSalary", connection)
                     {CommandType = CommandType.StoredProcedure})
                 {
                     var adapter = new SqlDataAdapter(cmd);

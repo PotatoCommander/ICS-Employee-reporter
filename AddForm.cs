@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ICS_Employee_reporter.DAL;
 using ICS_Employee_reporter.Models;
@@ -16,6 +9,7 @@ namespace ICS_Employee_reporter
     {
         private MainForm _parentForm;
         private EmployeeRepository _repository;
+
         public AddForm(MainForm parentForm, EmployeeRepository repository)
         {
             _repository = repository;
@@ -25,7 +19,7 @@ namespace ICS_Employee_reporter
 
         private void CreateButton_Click(object sender, EventArgs e)
         {
-            var employee = new Employee()
+            var employee = new Employee
             {
                 FirstName = FirstNameTextBox.Text,
                 LastName = LastNameTextBox.Text,
@@ -38,7 +32,7 @@ namespace ICS_Employee_reporter
             if (isSuccess)
             {
                 _parentForm.UpdateData();
-                this.Close();
+                Close();
                 return;
             }
 

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ICS_Employee_reporter.Models
+﻿namespace ICS_Employee_reporter.Models
 {
     public class ReportRecord
     {
